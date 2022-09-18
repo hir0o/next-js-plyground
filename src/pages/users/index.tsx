@@ -3,11 +3,11 @@ import { NextPage } from 'next'
 import useSWR from 'swr'
 
 const Page: NextPage = () => {
-  const { data } = useSWR('users', usersRepository.getUsers)
+  const { data: users } = useSWR('users', usersRepository.getUsers)
 
   return (
     <div>
-      {data?.users?.map((user) => (
+      {users?.map((user) => (
         <p>{user.name}</p>
       ))}
     </div>
