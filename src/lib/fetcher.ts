@@ -1,5 +1,3 @@
-import { User } from '@prisma/client'
-
 export const fetcher = {
   get: async <T>(url: string) => {
     const res = await fetch(url)

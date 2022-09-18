@@ -5,3 +5,5 @@ export const UserModel = z.object({
   name: z.string(),
   email: z.string(),
 })
+
+export type User = z.infer<typeof UserModel>

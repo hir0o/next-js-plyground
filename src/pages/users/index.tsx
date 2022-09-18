@@ -1,17 +1,14 @@
-import { usersRepository } from '@/repositories/users'
 import { NextPage } from 'next'
-import useSWR from 'swr'
+import { Suspense } from 'react'
+import { UserList } from '@/components/UserList'
+import { ErrorBoundary } from '@/components/ErrorBoundaly'
 
-const Page: NextPage = () => {
-  const { data: users } = useSWR('users', usersRepository.getUsers)
-
-  return (
-    <div>
-      {users?.map((user) => (
-        <p>{user.name}</p>
-      ))}
-    </div>
-  )
-}
+const Page: NextPage = () => (
+  <ErrorBoundary fallback={<p>error!!!!!!</p>}>
+    <Suspense fallback={<p>loading...</p>}>
+      <UserList />
+    </Suspense>
+  </ErrorBoundary>
+)
 
 export default Page
