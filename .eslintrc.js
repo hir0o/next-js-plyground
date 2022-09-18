@@ -74,6 +74,7 @@ module.exports = {
     'react/destructuring-assignment': 0,
     'no-promise-executor-return': 0,
     'react/no-unstable-nested-components': 0,
+    'max-classes-per-file': 0,
   },
   ignorePatterns: ['.eslintrc.*', '*.config.*'],
 }

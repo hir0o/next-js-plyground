@@ -1746,6 +1746,11 @@ onetime@^6.0.0:
   dependencies:
     mimic-fn "^4.0.0"
 
+option-t@^32.6.5:
+  version "32.6.5"
+  resolved "https://registry.yarnpkg.com/option-t/-/option-t-32.6.5.tgz#ae991ab2990ac472c8c8821b7b7840b1f1797e16"
+  integrity sha512-uu0eIA0G5y7SAeM0kPeZUcNcaPqml1PhDfrcIBpoNuVeXnUk+v2o6YO7CXl2II/8qtygWxiZJKb0TVkkklT4Tg==
+
 optionator@^0.9.1:
   version "0.9.1"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.9.1.tgz#4f236a6373dae0566a6d43e1326674f50c291499"
