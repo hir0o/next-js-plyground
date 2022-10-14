@@ -1,0 +1,13 @@
+.modal {
+  background-color: transparent;
+  border: none;
+}
+.modal::backdrop {
+  background-color: rgba(#f0f, 0.5);
+}
+
+.contents {
+  width: max-content;
+  text-align: center;
+  background-color: #ff0;
+}

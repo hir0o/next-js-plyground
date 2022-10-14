@@ -8,4 +8,5 @@ module.exports = {
       '@/*': ['src/*'],
     },
   },
+  pageExtensions: ['page.tsx', 'api.ts'],
 }

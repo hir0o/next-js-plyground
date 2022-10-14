@@ -11,7 +11,7 @@ export const UserList: FC = () => {
   return (
     <div>
       {users?.map((user) => (
-        <div>
+        <div key={user.id}>
           <p>name: {user.name}</p>
           <br />
           <p>email: {user.email}</p>

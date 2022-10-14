@@ -1,0 +1,9 @@
+- [x] zod で api のバリデーション
+- [x] suspense でデータの取得
+- [x] error-boundaly でエラーハンドリング
+- [ ] custom error で詳細なエラーハンドリング
+- [ ] dialog でエラーの表示
+- [ ] form 送信時のエラーハンドリング
+- [ ] form 送信時に mutate、いい感じにラップして
+- [ ] io-ts 触ってみる
+- [ ] vitest 入れてみる
