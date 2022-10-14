@@ -7,7 +7,13 @@
     "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start",
+    "lint": "next lint",
     "prepare": "husky install",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:reset": "prisma migrate reset",
+    "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "lint-staged": "lint-staged"
   },
