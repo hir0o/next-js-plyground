@@ -1,5 +1,6 @@
 import { Todo } from '@prisma/client'
 import { FC, useEffect, useState } from 'react'
+// import { container } from './TodoList.css'
 
 export const TodoList: FC = () => {
   const [todo, setTodo] = useState<Todo[]>([])
@@ -10,7 +11,7 @@ export const TodoList: FC = () => {
 
   useEffect(() => {
     const fetchTodo = async () => {
-      const res = await fetch('http://localhost:8080/api/todo')
+      const res = await fetch('http://localhost:3000/api/todo')
 
       if (res.ok) {
         const data = await res.json()
