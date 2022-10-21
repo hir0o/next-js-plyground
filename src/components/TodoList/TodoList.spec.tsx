@@ -37,7 +37,12 @@ const todo: Todo[] = [
 ]
 
 const server = setupServer(
-  rest.get('http://localhost:8080/api/todo', (req, res, ctx) => {
+  rest.get('http://localhost:8080/api/todo', async (req, res, ctx) => {
+    await new Promise<void>((resolve) =>
+      setTimeout(() => {
+        resolve()
+      }, 1000)
+    )
     return res(ctx.status(200), ctx.json(todo))
   })
 )
@@ -53,24 +58,14 @@ describe('TodoList', () => {
     expect(screen.getByRole('heading')).toHaveTextContent('todo list')
   })
 
-  it('タスクが表示されていること', async () => {
-    render(<TodoList />)
-
-    await waitFor(() => {
-      expect(screen.getByText('todo list')).toBeInTheDocument()
-    })
-  })
-
   it('inputが空だと追加ボタンが押せないこと', () => {
     render(<TodoList />)
 
-    waitFor(() => {
-      expect(screen.getByRole('textbox')).toHaveValue('')
-      expect(screen.getByRole('button')).toBeDisabled()
-    })
+    expect(screen.getByRole('textbox')).toHaveValue('')
+    expect(screen.getByRole('button')).toBeDisabled()
   })
 
-  it('inputに入力があると、ボタンが押せること', () => {
+  it('inputに入力があると、ボタンが押せること', async () => {
     const user = userEvent.setup()
     render(<TodoList />)
 
@@ -80,14 +75,16 @@ describe('TodoList', () => {
     waitFor(() => expect(screen.getByRole('button')).toBeEnabled())
   })
 
-  it('todo listが表示されていること', async () => {
+  it('todo listが表示されていること', () => {
     render(<TodoList />)
 
-    const listItems = await screen.findAllByRole('listitem')
-    expect(listItems).toHaveLength(3)
-    expect(listItems[0]).toHaveTextContent('todo1')
-    expect(listItems[1]).toHaveTextContent('todo2')
-    expect(listItems[2]).toHaveTextContent('todo3')
+    waitFor(async () => {
+      const listItems = await screen.findAllByRole('listitem')
+      expect(listItems).toHaveLength(3)
+      expect(listItems[0]).toHaveTextContent('todo1')
+      expect(listItems[1]).toHaveTextContent('todo2')
+      expect(listItems[2]).toHaveTextContent('todo3')
+    })
   })
 
   it('listが空の場合、todo listが表示されていないこと', async () => {
