@@ -23,7 +23,7 @@ const todo: Todo[] = [
 ]
 
 export const handlers = [
-  rest.get('http://localhost:8080/api/todo', (req, res, ctx) => {
+  rest.get('http://localhost:3000/api/todo', (req, res, ctx) => {
     return res(ctx.json(todo))
   }),
 ]

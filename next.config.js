@@ -1,7 +1,7 @@
 /**
  * @type {import('next').NextConfig}
  */
-module.exports = {
+const nextConfig = {
   compilerOptions: {
     baseUrl: '.',
     paths: {
@@ -10,3 +10,8 @@ module.exports = {
   },
   pageExtensions: ['page.tsx', 'api.ts'],
 }
+
+// const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin')
+// const withVanillaExtract = createVanillaExtractPlugin()
+
+module.exports = nextConfig

@@ -25,5 +25,5 @@ module.exports = {
     project: './tsconfig.json',
   },
   plugins: ['react', '@typescript-eslint', 'import-access'],
-  ignorePatterns: ['.eslintrc.*', '*.config.*'],
+  ignorePatterns: ['.eslintrc.*', '*.config.*', 'public/*'],
 }
