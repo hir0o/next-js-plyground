@@ -1,11 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma, Todo } from '@/prisma'
 
-type Data = Todo[] | { err: string } | Todo
+type ResData = Todo[] | { err: string } | Todo
+
+type ReqData = Todo
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
   switch (req.method) {
     case 'GET': {
@@ -13,9 +15,31 @@ export default async function handler(
       res.status(200).json(todo)
       break
     }
-    case 'POST':
-      res.status(405).json({ err: 'Method Not Allowed' })
+    case 'POST': {
+      const body = req.body
+      await prisma.todo.create({
+        data: {
+          title: body.title,
+          detail: '',
+          isChecked: false,
+        },
+      })
+
+      res.status(201).send({
+        message: 'success',
+      })
       break
+    }
+    case 'DELETE': {
+      const body = req.body
+      await prisma.todo.delete({
+        where: {
+          id: body.id,
+        },
+      })
+
+      res.status(204)
+    }
     default:
       res.status(405).json({ err: 'Method Not Allowed' })
   }
