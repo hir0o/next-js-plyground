@@ -1,36 +1,45 @@
 import { apiClient } from '@/lib/apiClient'
-import { Todo } from '@prisma/client'
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react'
-// import { container } from './TodoList.css'
+import useSWR from 'swr'
+
+const useTodoList = () => {
+  return useSWR('todo', apiClient.todo.$get)
+}
 
 export const TodoList: FC = () => {
-  const [todo, setTodo] = useState<Todo[]>([])
+  const { data: todo, mutate, isLoading, isValidating } = useTodoList()
+
   const [errorOccurred, setErrorOccurred] = useState(false)
   const [text, setText] = useState('')
 
-  useEffect(() => {
-    const fetchTodo = async () => {
-      try {
-        const res = await apiClient.todo.$get()
-
-        setTodo(res)
-      } catch {
-        setErrorOccurred(true)
-      }
-    }
-
-    fetchTodo()
-  }, [])
-
   const create = useCallback(async () => {
-    await apiClient.todo.$post({
-      body: {
-        title: text,
-      },
+    const res = await apiClient.todo
+      .$post({
+        body: {
+          title: text,
+        },
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+
+    console.log('aaa', res)
+
+    mutate((data) => {
+      if (data === undefined) return
+      return [
+        ...data,
+        {
+          id: 1,
+          title: text,
+          detail: '',
+          isChecked: false,
+        },
+      ]
     })
 
     setText('')
-  }, [text])
+  }, [text, mutate])
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value)
@@ -54,7 +63,9 @@ export const TodoList: FC = () => {
       <button disabled={text === ''} onClick={create}>
         作成
       </button>
-      {todo.length > 0 ? (
+      {isValidating && <p>更新中</p>}
+      {isLoading && <h1>ロード中！！！！！！！！！！</h1>}
+      {todo !== undefined && todo.length > 0 ? (
         <ul>
           {todo.map((item) => (
             <li key={item.id}>

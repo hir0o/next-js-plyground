@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma, Todo } from '@/prisma'
 
+const sleep = (t: number) => new Promise<void>((r) => setTimeout(() => r(), t))
+
 type ResData = Todo[] | { err: string } | Todo
 
 type ReqData = Todo
@@ -12,10 +14,15 @@ export default async function handler(
   switch (req.method) {
     case 'GET': {
       const todo = await prisma.todo.findMany()
+      await sleep(1000)
       res.status(200).json(todo)
       break
     }
     case 'POST': {
+      res.status(500).send({
+        message: 'error',
+      })
+      break
       const body = req.body
       await prisma.todo.create({
         data: {

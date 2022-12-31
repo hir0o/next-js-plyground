@@ -1,5 +1,7 @@
 import type { AppProps } from 'next/app'
 import '@/styles/global.css'
+import { apiClient } from '@/lib/apiClient'
+import { preload } from 'swr'
 
 // if (process.env.NODE_ENV === 'development') {
 //   if (typeof window !== 'undefined') {
@@ -7,6 +9,8 @@ import '@/styles/global.css'
 //     mc.worker.start()
 //   }
 // }
+
+preload('todo', apiClient.todo.$get)
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
