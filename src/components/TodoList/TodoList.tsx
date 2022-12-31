@@ -1,3 +1,4 @@
+import { apiClient } from '@/lib/apiClient'
 import { Todo } from '@prisma/client'
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react'
 // import { container } from './TodoList.css'
@@ -7,16 +8,13 @@ export const TodoList: FC = () => {
   const [errorOccurred, setErrorOccurred] = useState(false)
   const [text, setText] = useState('')
 
-  const isButtonDisabled = text === ''
-
   useEffect(() => {
     const fetchTodo = async () => {
-      const res = await fetch('http://localhost:3000/api/todo')
+      try {
+        const res = await apiClient.todo.$get()
 
-      if (res.ok) {
-        const data = await res.json()
-        setTodo(data)
-      } else {
+        setTodo(res)
+      } catch {
         setErrorOccurred(true)
       }
     }
@@ -25,16 +23,11 @@ export const TodoList: FC = () => {
   }, [])
 
   const create = useCallback(async () => {
-    const res = await fetch('http://localhost:3000/api/todo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    await apiClient.todo.$post({
+      body: {
         title: text,
-      }),
+      },
     })
-    console.log(res)
 
     setText('')
   }, [text])
@@ -45,14 +38,10 @@ export const TodoList: FC = () => {
 
   const handleDelete = useCallback(
     (id: number) => async () => {
-      const res = await fetch('http://localhost:3000/api/todo', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const res = await apiClient.todo.delete({
+        body: {
           id,
-        }),
+        },
       })
     },
     []

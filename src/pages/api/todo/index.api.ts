@@ -38,7 +38,10 @@ export default async function handler(
         },
       })
 
-      res.status(204)
+      res.status(200).send({
+        message: 'success',
+      })
+      break
     }
     default:
       res.status(405).json({ err: 'Method Not Allowed' })
